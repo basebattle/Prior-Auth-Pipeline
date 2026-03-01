@@ -124,20 +124,10 @@ export function RequestForm() {
 
                         <div className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
-                                <InputGroup label="Patient ID" value={formData.patient_id} onChange={(v) => setFormData({ ...formData, patient_id: v })} placeholder="e.g. P1001" />
-                                <InputGroup label="DOB" value={formData.patient_dob} onChange={(v) => setFormData({ ...formData, patient_dob: v })} placeholder="YYYY-MM-DD" />
+                                <InputGroup label="Patient ID" value={formData.patient_id} onChange={(v: string) => setFormData({ ...formData, patient_id: v })} placeholder="e.g. P1001" />
+                                <InputGroup label="DOB" value={formData.patient_dob} onChange={(v: string) => setFormData({ ...formData, patient_dob: v })} placeholder="YYYY-MM-DD" />
                             </div>
-                            <InputGroup label="Full Name" value={formData.patient_name} onChange={(v) => setFormData({ ...formData, patient_name: v })} placeholder="e.g. John Doe" />
-                            <div>
-                                <label className="block text-[10px] uppercase font-bold text-neutral-500 mb-1 ml-1">Payer</label>
-                                <select
-                                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-colors"
-                                    value={formData.payer_name}
-                                    onChange={(e) => setFormData({ ...formData, payer_name: e.target.value })}
-                                >
-                                    {PAYERS.map(p => <option key={p} value={p}>{p}</option>)}
-                                </select>
-                            </div>
+                            <InputGroup label="Full Name" value={formData.patient_name} onChange={(v: string) => setFormData({ ...formData, patient_name: v })} placeholder="e.g. John Doe" />
                         </div>
                     </div>
 
@@ -150,11 +140,21 @@ export function RequestForm() {
 
                         <div className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
-                                <InputGroup label="Procedure Code" value={formData.procedure_code} onChange={(v) => setFormData({ ...formData, procedure_code: v })} placeholder="CPT/HCPCS" />
-                                <InputGroup label="Provider NPI" value={formData.requesting_provider_npi} onChange={(v) => setFormData({ ...formData, requesting_provider_npi: v })} placeholder="10 Digits" />
+                                <InputGroup label="Procedure Code" value={formData.procedure_code} onChange={(v: string) => setFormData({ ...formData, procedure_code: v })} placeholder="CPT/HCPCS" />
+                                <InputGroup label="Provider NPI" value={formData.requesting_provider_npi} onChange={(v: string) => setFormData({ ...formData, requesting_provider_npi: v })} placeholder="10 Digits" />
                             </div>
-                            <InputGroup label="Diagnosis Codes" value={formData.diagnosis_codes} onChange={(v) => setFormData({ ...formData, diagnosis_codes: v })} placeholder="ICD-10 (comma separated)" />
+                            <InputGroup label="Diagnosis Codes" value={formData.diagnosis_codes} onChange={(v: string) => setFormData({ ...formData, diagnosis_codes: v })} placeholder="ICD-10 (comma separated)" />
 
+                            <div>
+                                <label className="block text-[10px] uppercase font-bold text-neutral-500 mb-1 ml-1">Payer</label>
+                                <select
+                                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-colors"
+                                    value={formData.payer_name}
+                                    onChange={(e) => setFormData({ ...formData, payer_name: e.target.value })}
+                                >
+                                    {PAYERS.map(p => <option key={p} value={p}>{p}</option>)}
+                                </select>
+                            </div>
                             <div>
                                 <label className="block text-[10px] uppercase font-bold text-neutral-500 mb-1 ml-1">Urgency</label>
                                 <div className="flex gap-4 p-1 bg-neutral-950 border border-neutral-800 rounded-lg">
@@ -175,23 +175,23 @@ export function RequestForm() {
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Clinical Justification */}
-                <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl overflow-hidden">
-                    <div className="flex border-b border-neutral-800">
-                        <TabButton active={activeTab === 'manual'} onClick={() => setActiveTab('manual')} icon={<Keyboard className="size-4" />} label="Manual Notes" />
-                        <TabButton active={activeTab === 'ocr'} onClick={() => setActiveTab('ocr')} icon={<Upload className="size-4" />} label="OCR Extract" />
-                        <TabButton active={activeTab === 'voice'} onClick={() => setActiveTab('voice')} icon={<Mic className="size-4" />} label="Voice Transcription" />
-                    </div>
+                    {/* Clinical Justification */}
+                    <div className="bg-neutral-900/50 border border-neutral-800 rounded-2xl overflow-hidden md:col-span-2">
+                        <div className="flex border-b border-neutral-800">
+                            <TabButton active={activeTab === 'manual'} onClick={() => setActiveTab('manual')} icon={<Keyboard className="size-4" />} label="Manual Notes" />
+                            <TabButton active={activeTab === 'ocr'} onClick={() => setActiveTab('ocr')} icon={<Upload className="size-4" />} label="OCR Extract" />
+                            <TabButton active={activeTab === 'voice'} onClick={() => setActiveTab('voice')} icon={<Mic className="size-4" />} label="Voice Transcription" />
+                        </div>
 
-                    <div className="p-6">
-                        <textarea
-                            className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-neutral-300 h-48 focus:border-blue-500 outline-none transition-colors overflow-y-auto"
-                            placeholder="Enter clinical justification, exam findings, or therapy history..."
-                            value={formData.clinical_notes}
-                            onChange={(e) => setFormData({ ...formData, clinical_notes: e.target.value })}
-                        />
+                        <div className="p-6">
+                            <textarea
+                                className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-neutral-300 h-48 focus:border-blue-500 outline-none transition-colors overflow-y-auto"
+                                placeholder="Enter clinical justification, exam findings, or therapy history..."
+                                value={formData.clinical_notes}
+                                onChange={(e) => setFormData({ ...formData, clinical_notes: e.target.value })}
+                            />
+                        </div>
                     </div>
                 </div>
 
