@@ -42,30 +42,35 @@ def main():
     st.sidebar.markdown("---")
     st.sidebar.info("Authorized Healthcare Personnel Only. Data is processed in-memory (synthetic for demonstration).")
 
-    # Routing based on selection
-    if selection == "New PA Request":
-        from pages import new_request
-        new_request.show()
-    elif selection == "Pipeline Visualizer":
-        from pages import pipeline_view
-        pipeline_view.show()
-    elif selection == "Appeals Management":
-        from pages import appeals
-        appeals.show()
-    elif selection == "Analytics Dashboard":
-        from pages import analytics
-        analytics.show()
-    elif selection == "Batch Processing":
-        from pages import batch
-        batch.show()
-    elif selection == "History":
-        from pages import history
-        history.show()
-    elif selection == "User Manual":
-        from pages import user_manual
-        user_manual.show()
-    elif selection == "Settings":
-        st.write("Settings and API Config")
+    # Routing based on selection with basic error handling
+    try:
+        if selection == "New PA Request":
+            from pages import new_request
+            new_request.show()
+        elif selection == "Pipeline Visualizer":
+            from pages import pipeline_view
+            pipeline_view.show()
+        elif selection == "Appeals Management":
+            from pages import appeals
+            appeals.show()
+        elif selection == "Analytics Dashboard":
+            from pages import analytics
+            analytics.show()
+        elif selection == "Batch Processing":
+            from pages import batch
+            batch.show()
+        elif selection == "History":
+            from pages import history
+            history.show()
+        elif selection == "User Manual":
+            from pages import user_manual
+            user_manual.show()
+        elif selection == "Settings":
+            st.write("Settings and API Config")
+    except Exception as e:
+        st.error(f"Error rendering page '{selection}': {e}")
+        import traceback
+        st.code(traceback.format_exc())
 
 if __name__ == "__main__":
     main()

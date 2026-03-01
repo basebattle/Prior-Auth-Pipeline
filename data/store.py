@@ -197,3 +197,23 @@ class PAStore:
             ))
             cursor.execute("UPDATE pa_requests SET status = 'complete', completed_at = CURRENT_TIMESTAMP WHERE id = ?", (request_id,))
             conn.commit()
+
+    def get_package(self, request_id: str) -> Optional[Dict[str, Any]]:
+        """Get the generated package for a request."""
+        conn = self._get_connection()
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM pa_packages WHERE pa_request_id = ?", (request_id,))
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            res = dict(row)
+            # Parse JSON fields
+            for field in ["supporting_evidence", "documentation_checklist", "npi_verification_result", "risk_factors", "recommended_actions"]:
+                if field in res and res[field]:
+                    try:
+                        res[field] = json.loads(res[field])
+                    except:
+                        res[field] = [] if field != "npi_verification_result" else {}
+            return res
+        return None

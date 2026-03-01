@@ -92,9 +92,9 @@ def show():
                 urgency=urgency
             )
 
-            # 2. Call service (async logic)
-            with st.spinner("Processing through Agent Pipeline..."):
-                request_id = asyncio.run(pa_service.submit_request(request_data))
+            # 2. Call service (Sync call is safer in Streamlit)
+            with st.spinner("Processing through Agent Pipeline (Approx 45s)..."):
+                request_id = pa_service.submit_request_sync(request_data)
                 st.success(f"PA-2026-{request_id[:4]} submitted successfully!")
                 st.info("Navigate to 'Pipeline Visualizer' to see agent progress.")
                 st.session_state["last_request_id"] = request_id

@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import asyncio
+import time
 from services.pa_service import pa_service
 from data.schemas import PARequestInput
 
@@ -34,10 +35,9 @@ def show():
                             urgency="standard"
                         )
 
-                        # 2. Call service (synchronous loop for simplicity in V1)
-                        # asyncio.run(pa_service.submit_request(request_data))
+                        # 2. Call service (Sync call is safer)
+                        pa_service.submit_request_sync(request_data)
                         st.info(f"Processing {index+1}/{len(df)}: {row.get('patient_name')}")
-                        time.sleep(1) # Simulation delay
                         
                     except Exception as e:
                         st.error(f"Error on row {index}: {e}")

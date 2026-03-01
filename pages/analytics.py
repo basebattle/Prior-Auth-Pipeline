@@ -59,8 +59,13 @@ def show():
 
     with colD:
         st.subheader("By PA Type")
-        # Donut chart for type distribution
         # Simulated if not in DB
-        type_data = {"Type": ["Surgical", "Imaging", "Medication", "DME", "Behavioral"], "Count": [35, 28, 22, 10, 5]}
-        figType = px.pie(type_data, names="Type", values="Count", hole=0.5, title="Category Mix")
-        st.plotly_chart(figType, use_container_width=True)
+        type_df = pd.DataFrame({
+            "Type": ["Surgical", "Imaging", "Medication", "DME", "Behavioral"], 
+            "Count": [35, 28, 22, 10, 5]
+        })
+        try:
+            figType = px.pie(type_df, names="Type", values="Count", hole=0.5, title="Category Mix")
+            st.plotly_chart(figType, use_container_width=True)
+        except Exception as e:
+            st.error(f"Chart Error: {e}")

@@ -22,6 +22,11 @@ def show():
     # Simple table display
     # We display ID, Patient, Payer, Code, Urgency, Status, Created At
     if not df.empty:
+        # Ensure all required columns exist
+        for col in ["id", "patient_name", "payer_name", "procedure_code", "urgency", "status", "created_at"]:
+            if col not in df.columns:
+                df[col] = "N/A"
+        
         df["created_at"] = pd.to_datetime(df["created_at"])
         cols_to_show = ["id", "patient_name", "payer_name", "procedure_code", "urgency", "status", "created_at"]
         st.dataframe(df[cols_to_show], hide_index=True, use_container_width=True)

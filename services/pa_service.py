@@ -17,14 +17,30 @@ class PAService:
         self.pipeline = pa_pipeline
 
     async def submit_request(self, request: PARequestInput) -> str:
-        """Submit a single PA request for processing."""
+        """Submit a single PA request for processing (async)."""
+        state = self._prepare_initial_state(request)
+        try:
+            final_state = await self.pipeline.ainvoke(state)
+            return self._handle_final_state(state["request_id"], final_state)
+        except Exception as e:
+            self.store.update_request_status(state["request_id"], "error")
+            raise e
+
+    def submit_request_sync(self, request: PARequestInput) -> str:
+        """Submit a single PA request for processing (sync). Better for Streamlit frontend."""
+        state = self._prepare_initial_state(request)
+        try:
+            # LangGraph supports synchronous .invoke()
+            final_state = self.pipeline.invoke(state)
+            return self._handle_final_state(state["request_id"], final_state)
+        except Exception as e:
+            self.store.update_request_status(state["request_id"], "error")
+            raise e
+
+    def _prepare_initial_state(self, request: PARequestInput) -> PARequestState:
         request_id = str(uuid.uuid4())
-        
-        # Save to database initially
         self.store.create_request(request_id, request.dict())
-        
-        # Initialize internal state
-        state = PARequestState(
+        return PARequestState(
             request_id=request_id,
             patient_id=request.patient_id,
             patient_name=request.patient_name,
@@ -42,36 +58,29 @@ class PAService:
             agent_timings={}
         )
 
-        try:
-            # Run LangGraph pipeline
-            final_state = await self.pipeline.ainvoke(state)
-            
-            # Extract final package
-            pa_package = final_state.get("pa_package")
-            if pa_package:
-                self.store.save_package(request_id, pa_package.dict())
-            else:
-                self.store.update_request_status(request_id, "error")
-
-            return request_id
-
-        except Exception as e:
-            # Handle error and update status in database
+    def _handle_final_state(self, request_id: str, final_state: Dict[str, Any]) -> str:
+        pa_package = final_state.get("pa_package")
+        if pa_package:
+            # If it's a Pydantic model, convert to dict
+            package_dict = pa_package.dict() if hasattr(pa_package, 'dict') else pa_package
+            self.store.save_package(request_id, package_dict)
+        else:
             self.store.update_request_status(request_id, "error")
-            print(f"Pipeline error: {e}")
-            raise e
+        return request_id
 
     def get_all_requests(self, limit: int = 50) -> List[Dict[str, Any]]:
         """List all recent requests from database."""
         return self.store.list_requests(limit)
 
     def get_full_request_and_package(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """Get full PA request and its generated package if complete."""
+        """Get full PA request and its generated package joining two tables."""
         request = self.store.get_request(request_id)
         if not request: return None
         
-        # Logic to fetch package if complete
-        # (For now we rely on the DB store results)
+        package = self.store.get_package(request_id)
+        if package:
+            request["result_package"] = package
+        
         return request
 
 # Shared service instance
