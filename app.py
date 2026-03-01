@@ -61,25 +61,25 @@ def main():
     
     try:
         if active_page == "New PA Request":
-            from pages import new_request
+            from modules import new_request
             new_request.show()
         elif active_page == "Pipeline Visualizer":
-            from pages import pipeline_view
+            from modules import pipeline_view
             pipeline_view.show()
         elif active_page == "Appeals Management":
-            from pages import appeals
+            from modules import appeals
             appeals.show()
         elif active_page == "Analytics Dashboard":
-            from pages import analytics
+            from modules import analytics
             analytics.show()
         elif active_page == "Batch Processing":
-            from pages import batch
+            from modules import batch
             batch.show()
         elif active_page == "History":
-            from pages import history
+            from modules import history
             history.show()
         elif active_page == "User Manual":
-            from pages import user_manual
+            from modules import user_manual
             user_manual.show()
         elif active_page == "Settings":
             st.write("Settings and API Config")

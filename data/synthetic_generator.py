@@ -43,6 +43,30 @@ SCENARIOS = [
         "diagnosis_codes": ["K50.90"],
         "diagnosis_descriptions": ["Crohn's disease, unspecified"],
         "notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300."
+    },
+    {
+        "type": "cardiology",
+        "procedure_code": "93458",
+        "procedure_description": "Left Heart Cath with Coronary Angiogram",
+        "diagnosis_codes": ["I25.10"],
+        "diagnosis_descriptions": ["ASHD of native coronary artery"],
+        "notes": "72M with stable angina. Positive stress test showing reversible ischemia in LAD territory. Scheduled for elective diagnostic catheterization."
+    },
+    {
+        "type": "oncology",
+        "procedure_code": "77301",
+        "procedure_description": "IMRT Treatment Planning",
+        "diagnosis_codes": ["C61"],
+        "diagnosis_descriptions": ["Malignant neoplasm of prostate"],
+        "notes": "Newly diagnosed prostate adenocarcinoma, Gleason 4+3. PSA 12.4. Definitive radiotherapy planned utilizing IMRT for organ sparing."
+    },
+    {
+        "type": "physical_therapy",
+        "procedure_code": "97110",
+        "procedure_description": "Therapeutic Exercise",
+        "diagnosis_codes": ["M54.50"],
+        "diagnosis_descriptions": ["Low back pain, unspecified"],
+        "notes": "Patient with 3-week history of mechanical low back pain. Radiating to right buttock. Positive straight leg raise at 45 deg. Goals: increase ROM, reduce pain, return to work."
     }
 ]
 

@@ -16,17 +16,20 @@ def show():
     st.title("📄 New Prior Authorization Request")
     st.markdown("---")
 
-    # Sample Data Loader (Always outside form to trigger reruns correctly)
-    if st.button("🚀 Load Sample Orthopedic PA"):
+    # Randomized Sample Data Loader
+    if st.button("🎲 Load Randomized Sample PA"):
         from data import synthetic_generator
-        scenario = synthetic_generator.SCENARIOS[0] # TKR
-        st.session_state["patient_id"] = "P1001"
-        st.session_state["patient_name"] = "John Smith"
-        st.session_state["patient_dob"] = "1965-03-15"
-        st.session_state["payer_name"] = "UnitedHealthcare"
+        # Generate one randomized scenario
+        scenario = synthetic_generator.generate_scenarios(1)[0]
+        
+        st.session_state["patient_id"] = scenario["patient_id"]
+        st.session_state["patient_name"] = scenario["patient_name"]
+        st.session_state["patient_dob"] = scenario["patient_dob"]
+        st.session_state["payer_name"] = scenario["payer_name"]
         st.session_state["procedure_code"] = scenario["procedure_code"]
         st.session_state["diagnosis_codes"] = scenario["diagnosis_codes"]
-        st.session_state["clinical_notes"] = scenario["notes"]
+        st.session_state["requesting_provider_npi"] = scenario["requesting_provider_npi"]
+        st.session_state["clinical_notes"] = scenario["clinical_notes"]
         st.rerun()
 
     # Form Structure
