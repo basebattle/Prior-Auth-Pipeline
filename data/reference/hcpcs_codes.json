@@ -1,0 +1,22 @@
+[
+    {
+        "code": "J0131",
+        "description": "Injection, acetaminophen, 10 mg"
+    },
+    {
+        "code": "E0424",
+        "description": "Stationary compressed gaseous oxygen system, rental; includes contents ray, regulator, flowmeter, humidifier, cannula or mask, and tubing"
+    },
+    {
+        "code": "J1745",
+        "description": "Injection, infliximab, 10 mg (Remicade)"
+    },
+    {
+        "code": "J1442",
+        "description": "Injection, filgrastim (g-csf), 1 microgram"
+    },
+    {
+        "code": "J1602",
+        "description": "Injection, golimumab, 1 mg (Simponi Aria)"
+    }
+]

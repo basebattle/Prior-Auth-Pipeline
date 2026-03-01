@@ -1,0 +1,22 @@
+[
+    {
+        "code": "27447",
+        "description": "Arthroplasty, knee, condyle and plateau; medial and lateral compartments with or without patella resurfacing (total knee replacement)"
+    },
+    {
+        "code": "27130",
+        "description": "Arthroplasty, acetabular and proximal femoral replacement (total hip arthroplasty), with or without autograft or allograft"
+    },
+    {
+        "code": "22612",
+        "description": "Arthrodesis, posterior or posterolateral technique, single level; lumbar (with or without lateral transverse technique)"
+    },
+    {
+        "code": "70553",
+        "description": "Magnetic resonance (eg, proton) imaging, brain (including brain stem); without contrast material, followed by contrast material(s) and further sequences"
+    },
+    {
+        "code": "99213",
+        "description": "Office or other outpatient visit for the evaluation and management of an established patient, which requires a medically appropriate history and/or examination and low level of medical decision making"
+    }
+]

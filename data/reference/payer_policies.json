@@ -1,0 +1,43 @@
+[
+    {
+        "payer_name": "UnitedHealthcare",
+        "payer_id": "UHC001",
+        "procedure_code": "27447",
+        "requires_pa": true,
+        "pa_criteria": {
+            "conservative_tx": "Failed 3 months minimum",
+            "imaging_requirement": "Radiographic evidence of Grade 3+ osteoarthritis (Kellgren-Lawrence)",
+            "documentation": "Detailed PT notes (min 12 sessions)"
+        },
+        "typical_turnaround_days": 14,
+        "appeal_success_rate": 0.85,
+        "notes": "Higher denial risk for incomplete PT documentation"
+    },
+    {
+        "payer_name": "Aetna",
+        "payer_id": "AE001",
+        "procedure_code": "70553",
+        "requires_pa": true,
+        "pa_criteria": {
+            "clinical_indication": "Persistent headache > 3 months or red flag neurological signs",
+            "prior_imaging": "CT required if trauma suspected"
+        },
+        "typical_turnaround_days": 7,
+        "appeal_success_rate": 0.78,
+        "notes": "Strict adherence to Choosing Wisely guidelines required"
+    },
+    {
+        "payer_name": "BCBS",
+        "payer_id": "BC001",
+        "procedure_code": "J1745",
+        "requires_pa": true,
+        "pa_criteria": {
+            "diagnosis": "Crohn's Disease",
+            "prior_therapy": "Failure of corticosteroids or azathioprine/6-MP",
+            "weight_based": "Standard dosing only"
+        },
+        "typical_turnaround_days": 5,
+        "appeal_success_rate": 0.90,
+        "notes": "Re-authorization required every 6 months"
+    }
+]

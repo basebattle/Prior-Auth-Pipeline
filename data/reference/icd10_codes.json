@@ -1,0 +1,22 @@
+[
+    {
+        "code": "M17.11",
+        "description": "Unilateral primary osteoarthritis, right knee"
+    },
+    {
+        "code": "M16.11",
+        "description": "Unilateral primary osteoarthritis, right hip"
+    },
+    {
+        "code": "M48.06",
+        "description": "Spinal stenosis, lumbar region"
+    },
+    {
+        "code": "E11.9",
+        "description": "Type 2 diabetes mellitus without complications"
+    },
+    {
+        "code": "I10",
+        "description": "Essential (primary) hypertension"
+    }
+]

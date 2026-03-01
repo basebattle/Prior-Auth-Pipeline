@@ -1,0 +1,382 @@
+[
+  {
+    "id": "eacb1d14-3e10-4051-b154-c4c94cea691f",
+    "patient_id": "P12711",
+    "patient_name": "James Martinez",
+    "patient_dob": "1971-02-19",
+    "payer_name": "Humana",
+    "procedure_code": "J1745",
+    "procedure_description": "Infliximab injection",
+    "diagnosis_codes": [
+      "K50.90"
+    ],
+    "diagnosis_descriptions": [
+      "Crohn's disease, unspecified"
+    ],
+    "requesting_provider_npi": "6193226026",
+    "clinical_notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300.",
+    "urgency": "standard",
+    "type": "medication"
+  },
+  {
+    "id": "44069a5e-4d90-41ec-a2ee-d75acb91549f",
+    "patient_id": "P17135",
+    "patient_name": "Michael Brown",
+    "patient_dob": "1973-12-16",
+    "payer_name": "Humana",
+    "procedure_code": "J1745",
+    "procedure_description": "Infliximab injection",
+    "diagnosis_codes": [
+      "K50.90"
+    ],
+    "diagnosis_descriptions": [
+      "Crohn's disease, unspecified"
+    ],
+    "requesting_provider_npi": "5131663468",
+    "clinical_notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300.",
+    "urgency": "standard",
+    "type": "medication"
+  },
+  {
+    "id": "693a9ec5-2df1-4476-928b-fec2916f9d84",
+    "patient_id": "P27419",
+    "patient_name": "Robert Brown",
+    "patient_dob": "1951-10-30",
+    "payer_name": "BCBS",
+    "procedure_code": "27447",
+    "procedure_description": "Total Knee Replacement",
+    "diagnosis_codes": [
+      "M17.11"
+    ],
+    "diagnosis_descriptions": [
+      "Primary osteoarthritis, right knee"
+    ],
+    "requesting_provider_npi": "8209590984",
+    "clinical_notes": "Patient presents with severe OA of right knee. Failed 6 months of PT (12 sessions), NSAIDs, 3 steroid injections. X-ray confirms Grade IV OA. BMI 28.2. Functional limitation: unable to walk >100m. No contraindications.",
+    "urgency": "standard",
+    "type": "surgical"
+  },
+  {
+    "id": "1ab52fda-2da5-432b-a1c8-ea5b7660ebf7",
+    "patient_id": "P28308",
+    "patient_name": "Patricia Jones",
+    "patient_dob": "1955-08-28",
+    "payer_name": "Aetna",
+    "procedure_code": "70553",
+    "procedure_description": "MRI Brain with & without contrast",
+    "diagnosis_codes": [
+      "G43.9"
+    ],
+    "diagnosis_descriptions": [
+      "Migraine, unspecified"
+    ],
+    "requesting_provider_npi": "1471238540",
+    "clinical_notes": "Patient with chronic migraine shows change in headache pattern and new focal neurological signs. Red flag symptoms. Rule out intracranial pathology.",
+    "urgency": "standard",
+    "type": "imaging"
+  },
+  {
+    "id": "d8f97edd-8e78-42fe-b426-a8701162d3c6",
+    "patient_id": "P56367",
+    "patient_name": "William Williams",
+    "patient_dob": "2006-07-19",
+    "payer_name": "Humana",
+    "procedure_code": "27447",
+    "procedure_description": "Total Knee Replacement",
+    "diagnosis_codes": [
+      "M17.11"
+    ],
+    "diagnosis_descriptions": [
+      "Primary osteoarthritis, right knee"
+    ],
+    "requesting_provider_npi": "1123474168",
+    "clinical_notes": "Patient presents with severe OA of right knee. Failed 6 months of PT (12 sessions), NSAIDs, 3 steroid injections. X-ray confirms Grade IV OA. BMI 28.2. Functional limitation: unable to walk >100m. No contraindications.",
+    "urgency": "standard",
+    "type": "surgical"
+  },
+  {
+    "id": "940df466-6ef3-4089-bae9-0e409ab23003",
+    "patient_id": "P46479",
+    "patient_name": "Patricia Johnson",
+    "patient_dob": "1976-10-02",
+    "payer_name": "Medicaid",
+    "procedure_code": "70553",
+    "procedure_description": "MRI Brain with & without contrast",
+    "diagnosis_codes": [
+      "G43.9"
+    ],
+    "diagnosis_descriptions": [
+      "Migraine, unspecified"
+    ],
+    "requesting_provider_npi": "6772396718",
+    "clinical_notes": "Patient with chronic migraine shows change in headache pattern and new focal neurological signs. Red flag symptoms. Rule out intracranial pathology.",
+    "urgency": "standard",
+    "type": "imaging"
+  },
+  {
+    "id": "aaec3029-a412-45fa-b46e-fc94c21c70be",
+    "patient_id": "P72644",
+    "patient_name": "Robert Rodriguez",
+    "patient_dob": "1975-11-07",
+    "payer_name": "Aetna",
+    "procedure_code": "J1745",
+    "procedure_description": "Infliximab injection",
+    "diagnosis_codes": [
+      "K50.90"
+    ],
+    "diagnosis_descriptions": [
+      "Crohn's disease, unspecified"
+    ],
+    "requesting_provider_npi": "2856064954",
+    "clinical_notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300.",
+    "urgency": "standard",
+    "type": "medication"
+  },
+  {
+    "id": "c156dfcf-adc1-4f3e-b9ab-8734c7339f1c",
+    "patient_id": "P83853",
+    "patient_name": "Elizabeth Rodriguez",
+    "patient_dob": "1946-06-14",
+    "payer_name": "Aetna",
+    "procedure_code": "70553",
+    "procedure_description": "MRI Brain with & without contrast",
+    "diagnosis_codes": [
+      "G43.9"
+    ],
+    "diagnosis_descriptions": [
+      "Migraine, unspecified"
+    ],
+    "requesting_provider_npi": "5187902221",
+    "clinical_notes": "Patient with chronic migraine shows change in headache pattern and new focal neurological signs. Red flag symptoms. Rule out intracranial pathology.",
+    "urgency": "standard",
+    "type": "imaging"
+  },
+  {
+    "id": "0dea46ec-821d-4fac-8846-e2cdd2706e53",
+    "patient_id": "P99565",
+    "patient_name": "John Jones",
+    "patient_dob": "1998-07-04",
+    "payer_name": "UnitedHealthcare",
+    "procedure_code": "70553",
+    "procedure_description": "MRI Brain with & without contrast",
+    "diagnosis_codes": [
+      "G43.9"
+    ],
+    "diagnosis_descriptions": [
+      "Migraine, unspecified"
+    ],
+    "requesting_provider_npi": "5707837447",
+    "clinical_notes": "Patient with chronic migraine shows change in headache pattern and new focal neurological signs. Red flag symptoms. Rule out intracranial pathology.",
+    "urgency": "standard",
+    "type": "imaging"
+  },
+  {
+    "id": "7418446d-f74b-41c5-9b6c-dc640ed85368",
+    "patient_id": "P42602",
+    "patient_name": "Linda Miller",
+    "patient_dob": "2003-03-18",
+    "payer_name": "Medicaid",
+    "procedure_code": "J1745",
+    "procedure_description": "Infliximab injection",
+    "diagnosis_codes": [
+      "K50.90"
+    ],
+    "diagnosis_descriptions": [
+      "Crohn's disease, unspecified"
+    ],
+    "requesting_provider_npi": "3157328802",
+    "clinical_notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300.",
+    "urgency": "standard",
+    "type": "medication"
+  },
+  {
+    "id": "b19a82c8-11b1-4673-bfb3-a4e19852bb8f",
+    "patient_id": "P92876",
+    "patient_name": "William Martinez",
+    "patient_dob": "1965-04-02",
+    "payer_name": "Medicare",
+    "procedure_code": "27130",
+    "procedure_description": "Total Hip Replacement",
+    "diagnosis_codes": [
+      "M16.11"
+    ],
+    "diagnosis_descriptions": [
+      "Primary osteoarthritis, right hip"
+    ],
+    "requesting_provider_npi": "1881034151",
+    "clinical_notes": "Right hip pain increasing for 2 yrs. Radiographic joint space narrowing. Failed aquatic therapy and oral analgesics. High pain score (7/10). No surgical contraindications.",
+    "urgency": "standard",
+    "type": "surgical"
+  },
+  {
+    "id": "b07740f9-6655-4d52-9b4e-ca2a7f1a9256",
+    "patient_id": "P17461",
+    "patient_name": "John Martinez",
+    "patient_dob": "2007-01-19",
+    "payer_name": "BCBS",
+    "procedure_code": "J1745",
+    "procedure_description": "Infliximab injection",
+    "diagnosis_codes": [
+      "K50.90"
+    ],
+    "diagnosis_descriptions": [
+      "Crohn's disease, unspecified"
+    ],
+    "requesting_provider_npi": "5101541776",
+    "clinical_notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300.",
+    "urgency": "standard",
+    "type": "medication"
+  },
+  {
+    "id": "3e1a2fa7-6183-4e1b-aefb-f76493beb310",
+    "patient_id": "P20609",
+    "patient_name": "Patricia Brown",
+    "patient_dob": "1965-08-02",
+    "payer_name": "Aetna",
+    "procedure_code": "J1745",
+    "procedure_description": "Infliximab injection",
+    "diagnosis_codes": [
+      "K50.90"
+    ],
+    "diagnosis_descriptions": [
+      "Crohn's disease, unspecified"
+    ],
+    "requesting_provider_npi": "5045009802",
+    "clinical_notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300.",
+    "urgency": "standard",
+    "type": "medication"
+  },
+  {
+    "id": "8b2d476c-70dd-4e3d-a9fc-17f80eb761d8",
+    "patient_id": "P18935",
+    "patient_name": "James Williams",
+    "patient_dob": "1952-02-13",
+    "payer_name": "Humana",
+    "procedure_code": "27447",
+    "procedure_description": "Total Knee Replacement",
+    "diagnosis_codes": [
+      "M17.11"
+    ],
+    "diagnosis_descriptions": [
+      "Primary osteoarthritis, right knee"
+    ],
+    "requesting_provider_npi": "1585779751",
+    "clinical_notes": "Patient presents with severe OA of right knee. Failed 6 months of PT (12 sessions), NSAIDs, 3 steroid injections. X-ray confirms Grade IV OA. BMI 28.2. Functional limitation: unable to walk >100m. No contraindications.",
+    "urgency": "standard",
+    "type": "surgical"
+  },
+  {
+    "id": "ff85eda3-5906-4645-a1ca-245ae99dee07",
+    "patient_id": "P93314",
+    "patient_name": "Michael Brown",
+    "patient_dob": "1974-06-29",
+    "payer_name": "UnitedHealthcare",
+    "procedure_code": "27447",
+    "procedure_description": "Total Knee Replacement",
+    "diagnosis_codes": [
+      "M17.11"
+    ],
+    "diagnosis_descriptions": [
+      "Primary osteoarthritis, right knee"
+    ],
+    "requesting_provider_npi": "7697682366",
+    "clinical_notes": "Patient presents with severe OA of right knee. Failed 6 months of PT (12 sessions), NSAIDs, 3 steroid injections. X-ray confirms Grade IV OA. BMI 28.2. Functional limitation: unable to walk >100m. No contraindications.",
+    "urgency": "standard",
+    "type": "surgical"
+  },
+  {
+    "id": "55d0c5f4-0c58-40ee-8c92-6a31e2d8b147",
+    "patient_id": "P98846",
+    "patient_name": "Linda Davis",
+    "patient_dob": "1978-01-21",
+    "payer_name": "Aetna",
+    "procedure_code": "70553",
+    "procedure_description": "MRI Brain with & without contrast",
+    "diagnosis_codes": [
+      "G43.9"
+    ],
+    "diagnosis_descriptions": [
+      "Migraine, unspecified"
+    ],
+    "requesting_provider_npi": "4276145527",
+    "clinical_notes": "Patient with chronic migraine shows change in headache pattern and new focal neurological signs. Red flag symptoms. Rule out intracranial pathology.",
+    "urgency": "standard",
+    "type": "imaging"
+  },
+  {
+    "id": "fc73e388-50ce-4892-9034-a6d87bf79f3f",
+    "patient_id": "P80954",
+    "patient_name": "Patricia Miller",
+    "patient_dob": "1989-04-23",
+    "payer_name": "Medicaid",
+    "procedure_code": "27447",
+    "procedure_description": "Total Knee Replacement",
+    "diagnosis_codes": [
+      "M17.11"
+    ],
+    "diagnosis_descriptions": [
+      "Primary osteoarthritis, right knee"
+    ],
+    "requesting_provider_npi": "8249622565",
+    "clinical_notes": "Patient presents with severe OA of right knee. Failed 6 months of PT (12 sessions), NSAIDs, 3 steroid injections. X-ray confirms Grade IV OA. BMI 28.2. Functional limitation: unable to walk >100m. No contraindications.",
+    "urgency": "standard",
+    "type": "surgical"
+  },
+  {
+    "id": "b5fbf300-9115-4a03-b243-5e3c0ad41ba7",
+    "patient_id": "P67406",
+    "patient_name": "James Jones",
+    "patient_dob": "1974-07-07",
+    "payer_name": "BCBS",
+    "procedure_code": "J1745",
+    "procedure_description": "Infliximab injection",
+    "diagnosis_codes": [
+      "K50.90"
+    ],
+    "diagnosis_descriptions": [
+      "Crohn's disease, unspecified"
+    ],
+    "requesting_provider_npi": "9590881696",
+    "clinical_notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300.",
+    "urgency": "standard",
+    "type": "medication"
+  },
+  {
+    "id": "0207ff0e-8b2a-45c4-91b5-6fc37ebbae8e",
+    "patient_id": "P42837",
+    "patient_name": "Elizabeth Jones",
+    "patient_dob": "1946-05-04",
+    "payer_name": "Medicare",
+    "procedure_code": "27447",
+    "procedure_description": "Total Knee Replacement",
+    "diagnosis_codes": [
+      "M17.11"
+    ],
+    "diagnosis_descriptions": [
+      "Primary osteoarthritis, right knee"
+    ],
+    "requesting_provider_npi": "7264564292",
+    "clinical_notes": "Patient presents with severe OA of right knee. Failed 6 months of PT (12 sessions), NSAIDs, 3 steroid injections. X-ray confirms Grade IV OA. BMI 28.2. Functional limitation: unable to walk >100m. No contraindications.",
+    "urgency": "standard",
+    "type": "surgical"
+  },
+  {
+    "id": "f3582f40-1fd1-46e3-ae5e-e114e604cfe5",
+    "patient_id": "P54700",
+    "patient_name": "Elizabeth Brown",
+    "patient_dob": "1984-10-27",
+    "payer_name": "UnitedHealthcare",
+    "procedure_code": "J1745",
+    "procedure_description": "Infliximab injection",
+    "diagnosis_codes": [
+      "K50.90"
+    ],
+    "diagnosis_descriptions": [
+      "Crohn's disease, unspecified"
+    ],
+    "requesting_provider_npi": "9020497051",
+    "clinical_notes": "Severe Crohn's disease, failed first-line therapies (mesalamine, steroids). Escalation of therapy justified by CDAI score >300.",
+    "urgency": "standard",
+    "type": "medication"
+  }
+]

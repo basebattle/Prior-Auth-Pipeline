@@ -1,0 +1,44 @@
+[
+    {
+        "policy_id": "NCD-150.6",
+        "policy_name": "Total Knee Replacement",
+        "payer_category": "Medicare",
+        "procedure_codes": [
+            "27447"
+        ],
+        "diagnosis_requirements": {
+            "required_primary": [
+                "M17.0",
+                "M17.10",
+                "M17.11",
+                "M17.12"
+            ],
+            "description": "Primary or secondary osteoarthritis of knee, or other qualifying knee pathology"
+        },
+        "medical_necessity_criteria": [
+            "Failed conservative treatment for at least 3 months",
+            "Conservative treatment includes: physical therapy, NSAIDs, corticosteroid injections",
+            "Imaging confirming Kellgren-Lawrence Grade III or IV osteoarthritis",
+            "Documented functional limitation (ADL impairment)",
+            "BMI documented (BMI >40 may require additional justification)",
+            "Surgical candidacy confirmed (no absolute contraindications)"
+        ],
+        "documentation_requirements": [
+            "Clinical notes documenting conservative treatment history with dates",
+            "Imaging report (X-ray or MRI) with radiologist interpretation",
+            "Physical therapy records or letter of medical necessity from PT",
+            "Medication trial documentation",
+            "Surgical consultation note"
+        ],
+        "common_denial_reasons": [
+            "Insufficient conservative treatment duration (<3 months)",
+            "Missing imaging documentation",
+            "BMI not documented",
+            "Diagnosis code mismatch (using unspecified laterality)"
+        ],
+        "typical_turnaround_days": 14,
+        "appeal_success_rate": 0.82,
+        "effective_date": "2024-01-01",
+        "source": "CMS National Coverage Determination 150.6"
+    }
+]
