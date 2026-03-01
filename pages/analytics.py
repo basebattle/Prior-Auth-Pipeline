@@ -11,7 +11,10 @@ def show():
     requests = pa_service.get_all_requests(limit=1000)
     
     if not requests:
-        st.info("No analytics data available. Submit requests to see pipeline KPIs.")
+        st.warning("⚠️ No Data Found: No analytics data available yet.")
+        st.info("Analytics will populate automatically once Prior Authorization requests are submitted and processed.")
+        if st.button("🚀 Process Sample Data"):
+            st.info("Navigate to 'Batch Processing' to upload a test scenario.")
         return
 
     # Pandas processing

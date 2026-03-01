@@ -6,31 +6,33 @@ def show():
     st.title("🛡️ Human Review Checkpoint")
     st.markdown("---")
 
-    request_id = st.session_state.get("show_review_id")
+    # 🛠️ State Check Pattern
+    request_id = st.session_state.get("show_review_id") or st.session_state.get("app_state", {}).get("show_review_id")
+    
     if not request_id:
-        st.info("No PA request selected for review.")
+        st.warning("⚠️ No Data Found: No PA request selected for human review.")
+        st.info("Check 'Pipeline Visualizer' after a submission or select a case from 'History'.")
         return
 
     # Load dynamic data from service
     full_data = pa_service.get_full_request_and_package(request_id)
     if not full_data:
-        st.error("PA Request data not found.")
+        st.error("🚨 Error Retrieval: Case data missing from database.")
+        if st.button("Reset Selection"):
+            st.session_state["show_review_id"] = None
+            st.rerun()
         return
 
     # Extract metadata and package
     patient_name = full_data.get("patient_name", "Unknown")
-    patient_dob = full_data.get("patient_dob", "Unknown")
     payer_name = full_data.get("payer_name", "Unknown")
     procedure_code = full_data.get("procedure_code", "Unknown")
     
-    # Check if package exists in the DB result
-    # The PAStore saves the package in the 'result_package' column
     package = full_data.get("result_package", {})
-    if isinstance(package, str):
-        try:
-            package = json.loads(package)
-        except:
-            package = {}
+    # If package is missing but record exists
+    if not package:
+        st.info("Processing still in progress. Please wait for Decision Synthesis.")
+        return
 
     score = package.get("confidence_score", 0.0)
     risk_level = package.get("risk_level", "Unknown")
@@ -72,11 +74,13 @@ def show():
     colA, colB, colC = st.columns([1,1,3])
     with colA:
         if st.button("✅ Approve & Submit"):
-            st.success("PA-2026-0042 APPROVED. Submission sent to Payer Portal via API.")
+            st.success(f"PA-{request_id[:4]} APPROVED. Submission triggered.")
             st.balloons()
+            st.session_state["pipeline_status"] = "Submitted"
     with colB:
         if st.button("❌ Reject"):
-            st.error("PA-2026-0042 REJECTED. Denial notice generated.")
+            st.error(f"PA-{request_id[:4]} REJECTED. Denial notice generated.")
+            st.session_state["pipeline_status"] = "Rejected"
     with colC:
         if st.button("⬇ Export to PPTX/PDF"):
             st.write("Exporting package...")

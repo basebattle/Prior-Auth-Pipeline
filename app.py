@@ -15,22 +15,26 @@ from config.constants import SUPPORTED_PAYERS, PA_TYPES
 st.set_page_config(page_title=PAGE_TITLE, page_icon=PAGE_ICON, layout="wide")
 
 def main():
-    # Initialize basic session state keys for cross-page persistence
-    default_states = {
-        "patient_id": "",
-        "patient_name": "",
-        "patient_dob": "",
-        "payer_name": "UnitedHealthcare",
-        "procedure_code": "",
-        "diagnosis_codes": [],
-        "requesting_provider_npi": "",
-        "clinical_notes": "",
-        "last_request_id": None,
-        "show_review_id": None
-    }
-    for key, val in default_states.items():
+    # 🛠️ Step 1: Core State Fix (Structured Initialization)
+    if "app_state" not in st.session_state:
+        st.session_state["app_state"] = {
+            "requests": [],            # Cache for history
+            "last_request_id": None,   # ID for Pipeline View
+            "show_review_id": None,    # ID for Human Review
+            "clinical_notes": "",      # Shared notes buffer
+            "form_data": {},           # Persistent form inputs
+            "pipeline_status": "idle"  # Status tracker
+        }
+    
+    # Backwards compatibility for existing logic
+    for key in ["patient_id", "patient_name", "patient_dob", "payer_name", "procedure_code", "diagnosis_codes", "requesting_provider_npi", "clinical_notes"]:
         if key not in st.session_state:
-            st.session_state[key] = val
+            st.session_state[key] = "" if key != "diagnosis_codes" else []
+    
+    if "last_request_id" not in st.session_state:
+        st.session_state["last_request_id"] = None
+    if "show_review_id" not in st.session_state:
+        st.session_state["show_review_id"] = None
 
     st.sidebar.title("🩺 Prior Auth Pipeline")
     st.sidebar.markdown("---")
@@ -40,9 +44,9 @@ def main():
     selection = st.sidebar.radio("Navigation", menu)
 
     st.sidebar.markdown("---")
-    st.sidebar.info("Authorized Healthcare Personnel Only. Data is processed in-memory (synthetic for demonstration).")
+    st.sidebar.info("Authorized Healthcare Personnel Only. Data processed in-memory (synthetic).")
 
-    # Routing based on selection with basic error handling
+    # Routing based on selection with robust protection
     try:
         if selection == "New PA Request":
             from pages import new_request
@@ -68,9 +72,11 @@ def main():
         elif selection == "Settings":
             st.write("Settings and API Config")
     except Exception as e:
-        st.error(f"Error rendering page '{selection}': {e}")
-        import traceback
-        st.code(traceback.format_exc())
+        st.error(f"🚨 Module Error: Unable to load '{selection}'")
+        st.warning("This is often caused by a background script error or missing data state.")
+        with st.expander("Technical Traceback"):
+            import traceback
+            st.code(traceback.format_exc())
 
 if __name__ == "__main__":
     main()

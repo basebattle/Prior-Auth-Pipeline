@@ -12,7 +12,8 @@ def show():
     denied_requests = [r for r in requests if r.get("status") in ["denied", "error", "complete"]]
 
     if not denied_requests:
-        st.info("No denied PA requests available for appeal.")
+        st.warning("⚠️ No Data Found: No cases available for appeal.")
+        st.info("The Appeals Management module targets cases that have been denied or flagged with high risk factors.")
         return
 
     st.subheader("Select Denied PA for Appeal Generation")
