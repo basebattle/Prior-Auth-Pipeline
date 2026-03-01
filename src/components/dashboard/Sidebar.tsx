@@ -102,7 +102,7 @@ export function Sidebar() {
                             <span className="text-xs font-bold uppercase tracking-wider">Demo Active</span>
                         </div>
                         <p className="text-[10px] text-neutral-400 leading-relaxed">
-                            Connected to Local Pipeline Engine (v2.1.0). AI synthesis enabled.
+                            Connected to Render Pipeline (v2.1.0). AI synthesis enabled. Note: Free tier may take 90s to wake up on first click.
                         </p>
                     </div>
                 </ul>
