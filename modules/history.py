@@ -45,12 +45,6 @@ def show():
         with col2:
             if st.button("🛡️ Open for Human Review"):
                 st.session_state["show_review_id"] = selected_id
-                st.session_state["active_page"] = "Pipeline Visualizer" # Go to visualizer first or direct? User manual says checkpoint is after.
-                # Actually, let's go direct if they want review
-                from config.constants import PA_TYPES # just a dummy import to check
-                st.session_state["active_page"] = "Pipeline Visualizer" 
-                # Correction: The visualizer has the link to review. Let's redirect to Review if they chose that.
-                # However, many people want to see the pipeline first. 
-                # To follow user's 'blank screen' complaint, we stay on visualizer to show progress.
-                st.session_state["last_request_id"] = selected_id
+                st.session_state["active_page"] = "Human Review"
+                st.success(f"Redirecting to Review Checkpoint for {selected_id[:8]}...")
                 st.rerun()

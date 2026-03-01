@@ -36,7 +36,7 @@ def main():
     st.sidebar.markdown("---")
     
     # Navigation menu - Linked to Session State
-    menu = ["New PA Request", "Pipeline Visualizer", "Appeals Management", "Analytics Dashboard", "Batch Processing", "History", "User Manual", "Settings"]
+    menu = ["New PA Request", "Pipeline Visualizer", "Human Review", "Appeals Management", "Analytics Dashboard", "Batch Processing", "History", "User Manual", "Settings"]
     
     # Determine default index
     default_idx = menu.index(st.session_state["active_page"]) if st.session_state["active_page"] in menu else 0
@@ -66,6 +66,9 @@ def main():
         elif active_page == "Pipeline Visualizer":
             from modules import pipeline_view
             pipeline_view.show()
+        elif active_page == "Human Review":
+            from modules import review
+            review.show()
         elif active_page == "Appeals Management":
             from modules import appeals
             appeals.show()

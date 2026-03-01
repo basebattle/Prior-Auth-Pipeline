@@ -14,14 +14,35 @@ def show():
         st.info("Check 'Pipeline Visualizer' after a submission or select a case from 'History'.")
         return
 
-    # Load dynamic data from service
-    full_data = pa_service.get_full_request_and_package(request_id)
-    if not full_data:
-        st.error("🚨 Error Retrieval: Case data missing from database.")
-        if st.button("Reset Selection"):
-            st.session_state["show_review_id"] = None
-            st.rerun()
-        return
+    # 🛠️ Demo Data Overlay
+    if request_id and str(request_id).startswith("demo-"):
+        full_data = {
+            "patient_name": "Sarah Connor" if "approved" in request_id else "John Doe" if "denied" in request_id else "Mary Jane",
+            "payer_name": "UnitedHealthcare",
+            "procedure_code": "27447 (TKR)" if "approved" in request_id else "70553 (MRI)" if "denied" in request_id else "J1745 (Infliximab)",
+            "result_package": {
+                "confidence_score": 0.94 if "approved" in request_id else 0.22 if "denied" in request_id else 0.58,
+                "risk_level": "low" if "approved" in request_id else "high" if "denied" in request_id else "medium",
+                "recommendation": "approve" if "approved" in request_id else "deny" if "denied" in request_id else "human_review",
+                "cover_sheet": "### AUTOMATED PRIOR AUTH SUMMARY\nPatient satisfies all clinical criteria for Total Knee Arthroplasty per NCD 150.6." if "approved" in request_id else "### DENIAL NOTICE\nMissing prerequisite step therapy (Conservative management) per LCD L33556.",
+                "medical_necessity_argument": "Clinical records show Grade IV Kellgren-Lawrence osteoarthritis. 8 months of physical therapy failed to provide relief." if "approved" in request_id else "Medical records do not indicate failure of first-line therapies before requesting MRI.",
+                "documentation_checklist": [
+                    {"item": "X-Ray / MRI Evidence", "status": "present"},
+                    {"item": "Physical Therapy Records", "status": "present" if "approved" in request_id else "missing"},
+                    {"item": "Conservative Management Trail", "status": "present" if "approved" in request_id else "missing"}
+                ]
+            }
+        }
+    else:
+        # Load dynamic data from service
+        full_data = pa_service.get_full_request_and_package(request_id)
+        
+        if not full_data:
+            st.error("🚨 Error Retrieval: Case data missing from database.")
+            if st.button("Reset Selection"):
+                st.session_state["show_review_id"] = None
+                st.rerun()
+            return
 
     # Extract metadata and package
     patient_name = full_data.get("patient_name", "Unknown")
