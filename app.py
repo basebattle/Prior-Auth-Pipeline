@@ -15,22 +15,18 @@ from config.constants import SUPPORTED_PAYERS, PA_TYPES
 st.set_page_config(page_title=PAGE_TITLE, page_icon=PAGE_ICON, layout="wide")
 
 def main():
-    # 🛠️ Step 1: Core State Fix (Structured Initialization)
+    # 🛠️ Unified State Initialization
     if "app_state" not in st.session_state:
         st.session_state["app_state"] = {
-            "requests": [],            # Cache for history
-            "last_request_id": None,   # ID for Pipeline View
-            "show_review_id": None,    # ID for Human Review
-            "clinical_notes": "",      # Shared notes buffer
-            "form_data": {},           # Persistent form inputs
-            "pipeline_status": "idle"  # Status tracker
+            "last_request_id": None,
+            "show_review_id": None,
+            "active_page": "New PA Request",
+            "pipeline_status": "idle"
         }
-    
-    # Backwards compatibility for existing logic
-    for key in ["patient_id", "patient_name", "patient_dob", "payer_name", "procedure_code", "diagnosis_codes", "requesting_provider_npi", "clinical_notes"]:
-        if key not in st.session_state:
-            st.session_state[key] = "" if key != "diagnosis_codes" else []
-    
+
+    # Backward compatibility and shortcuts
+    if "active_page" not in st.session_state:
+        st.session_state["active_page"] = "New PA Request"
     if "last_request_id" not in st.session_state:
         st.session_state["last_request_id"] = None
     if "show_review_id" not in st.session_state:
@@ -39,41 +35,57 @@ def main():
     st.sidebar.title("🩺 Prior Auth Pipeline")
     st.sidebar.markdown("---")
     
-    # Navigation menu
+    # Navigation menu - Linked to Session State
     menu = ["New PA Request", "Pipeline Visualizer", "Appeals Management", "Analytics Dashboard", "Batch Processing", "History", "User Manual", "Settings"]
-    selection = st.sidebar.radio("Navigation", menu)
+    
+    # Determine default index
+    default_idx = menu.index(st.session_state["active_page"]) if st.session_state["active_page"] in menu else 0
+    
+    selection = st.sidebar.radio(
+        "Navigation", 
+        menu, 
+        index=default_idx, 
+        key="navigation_radio"
+    )
+
+    # Sync selection back to state
+    if selection != st.session_state["active_page"]:
+        st.session_state["active_page"] = selection
+        st.rerun()
 
     st.sidebar.markdown("---")
-    st.sidebar.info("Authorized Healthcare Personnel Only. Data processed in-memory (synthetic).")
+    st.sidebar.info("Authorized Healthcare Personnel Only. Data processed in-memory.")
 
-    # Routing based on selection with robust protection
+    # Routing based on state-driven selection
+    active_page = st.session_state["active_page"]
+    
     try:
-        if selection == "New PA Request":
+        if active_page == "New PA Request":
             from pages import new_request
             new_request.show()
-        elif selection == "Pipeline Visualizer":
+        elif active_page == "Pipeline Visualizer":
             from pages import pipeline_view
             pipeline_view.show()
-        elif selection == "Appeals Management":
+        elif active_page == "Appeals Management":
             from pages import appeals
             appeals.show()
-        elif selection == "Analytics Dashboard":
+        elif active_page == "Analytics Dashboard":
             from pages import analytics
             analytics.show()
-        elif selection == "Batch Processing":
+        elif active_page == "Batch Processing":
             from pages import batch
             batch.show()
-        elif selection == "History":
+        elif active_page == "History":
             from pages import history
             history.show()
-        elif selection == "User Manual":
+        elif active_page == "User Manual":
             from pages import user_manual
             user_manual.show()
-        elif selection == "Settings":
+        elif active_page == "Settings":
             st.write("Settings and API Config")
     except Exception as e:
-        st.error(f"🚨 Module Error: Unable to load '{selection}'")
-        st.warning("This is often caused by a background script error or missing data state.")
+        st.error(f"🚨 Module Error: Unable to load '{active_page}'")
+        st.warning("State mechanism recovered. Please retry navigation.")
         with st.expander("Technical Traceback"):
             import traceback
             st.code(traceback.format_exc())

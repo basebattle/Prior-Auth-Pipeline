@@ -30,7 +30,7 @@ def show():
         cols_to_show = ["id", "patient_name", "payer_name", "procedure_code", "urgency", "status", "created_at"]
         st.dataframe(df[cols_to_show], hide_index=True, use_container_width=True)
 
-        # 🛠️ Selection Logic (Sync to Global State)
+        # 🛠️ Selection Logic (Sync to Global State + Navigation)
         st.markdown("---")
         st.subheader("Inspection Tools")
         selected_id = st.selectbox("Select a Request ID to inspect", df["id"].tolist())
@@ -39,12 +39,18 @@ def show():
         with col1:
             if st.button("🔍 View in Pipeline Visualizer"):
                 st.session_state["last_request_id"] = selected_id
-                st.session_state["app_state"]["last_request_id"] = selected_id
-                st.success(f"Attached {selected_id[:8]} to Pipeline View.")
+                st.session_state["active_page"] = "Pipeline Visualizer"
+                st.success(f"Redirecting to Pipeline View for {selected_id[:8]}...")
                 st.rerun()
         with col2:
             if st.button("🛡️ Open for Human Review"):
                 st.session_state["show_review_id"] = selected_id
-                st.session_state["app_state"]["show_review_id"] = selected_id
-                st.success(f"Attached {selected_id[:8]} to Review Checkpoint.")
+                st.session_state["active_page"] = "Pipeline Visualizer" # Go to visualizer first or direct? User manual says checkpoint is after.
+                # Actually, let's go direct if they want review
+                from config.constants import PA_TYPES # just a dummy import to check
+                st.session_state["active_page"] = "Pipeline Visualizer" 
+                # Correction: The visualizer has the link to review. Let's redirect to Review if they chose that.
+                # However, many people want to see the pipeline first. 
+                # To follow user's 'blank screen' complaint, we stay on visualizer to show progress.
+                st.session_state["last_request_id"] = selected_id
                 st.rerun()
