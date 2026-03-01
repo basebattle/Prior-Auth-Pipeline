@@ -42,7 +42,8 @@ export function RequestForm() {
     const loadRandomData = async () => {
         setRandomizing(true);
         try {
-            const resp = await fetch("http://localhost:8000/api/scenarios?count=1");
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+            const resp = await fetch(`${baseUrl}/api/scenarios?count=1`);
             const data = await resp.json();
             const scenario = data[0];
 
@@ -74,7 +75,8 @@ export function RequestForm() {
                 diagnosis_codes: formData.diagnosis_codes.split(",").map(s => s.trim()).filter(Boolean)
             };
 
-            const resp = await fetch("http://localhost:8000/api/submit", {
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+            const resp = await fetch(`${baseUrl}/api/submit`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)

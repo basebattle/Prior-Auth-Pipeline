@@ -48,7 +48,8 @@ export function PipelineDisplay() {
 
     const pollData = async (rid: string) => {
         try {
-            const resp = await fetch(`http://localhost:8000/api/requests/${rid}`);
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+            const resp = await fetch(`${baseUrl}/api/requests/${rid}`);
             if (resp.ok) {
                 const result = await resp.json();
                 setData(result);

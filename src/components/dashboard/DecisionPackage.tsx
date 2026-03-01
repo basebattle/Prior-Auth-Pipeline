@@ -27,7 +27,8 @@ export function DecisionPackage() {
 
     useEffect(() => {
         if (rid) {
-            fetch(`http://localhost:8000/api/requests/${rid}`)
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+            fetch(`${baseUrl}/api/requests/${rid}`)
                 .then(res => res.json())
                 .then(res => {
                     setData(res);
@@ -42,13 +43,14 @@ export function DecisionPackage() {
     const handleDecision = async (status: string) => {
         setDeciding(status);
         try {
-            await fetch(`http://localhost:8000/api/review/${rid}`, {
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+            await fetch(`${baseUrl}/api/review/${rid}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status })
             });
             // Refresh data
-            const res = await fetch(`http://localhost:8000/api/requests/${rid}`);
+            const res = await fetch(`${baseUrl}/api/requests/${rid}`);
             setData(await res.json());
         } catch (err) {
             console.error(err);

@@ -22,7 +22,8 @@ export function HistoryTable() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:8000/api/requests")
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+        fetch(`${baseUrl}/api/requests`)
             .then(res => res.json())
             .then(data => {
                 setRequests(data);
