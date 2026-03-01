@@ -54,20 +54,21 @@ def show():
         with tabs[1]:
             uploaded_docs = st.file_uploader("Upload clinical records (PDF/JPG)", accept_multiple_files=True)
             if uploaded_docs:
-                if st.button("Extract Clinical Evidence"):
+                extract_btn = st.form_submit_button("Extract Clinical Evidence")
+                if extract_btn:
                     extracted_texts = []
                     for doc in uploaded_docs:
-                        with st.spinner(f"Processsing {doc.name}..."):
+                        with st.spinner(f"Processing {doc.name}..."):
                             text = ocr_tool.process_document(doc.read(), doc.name)
                             extracted_texts.append(f"--- {doc.name} ---\n{text}")
                     st.success("Extraction Complete.")
-                    clinical_notes = "\n\n".join(extracted_texts)
-                    st.session_state["clinical_notes"] = clinical_notes
+                    st.session_state["clinical_notes"] = "\n\n".join(extracted_texts)
                     st.rerun()
 
         with tabs[2]:
             st.info("Direct audio recording (Simulated)")
-            if st.button("🎤 Record Clinical Summary"):
+            record_btn = st.form_submit_button("🎤 Record Clinical Summary")
+            if record_btn:
                 with st.spinner("Transcribing..."):
                     transcription = voice_tool.transcribe_audio(b"dummy")
                     st.success("Transcription Complete.")

@@ -15,6 +15,23 @@ from config.constants import SUPPORTED_PAYERS, PA_TYPES
 st.set_page_config(page_title=PAGE_TITLE, page_icon=PAGE_ICON, layout="wide")
 
 def main():
+    # Initialize basic session state keys for cross-page persistence
+    default_states = {
+        "patient_id": "",
+        "patient_name": "",
+        "patient_dob": "",
+        "payer_name": "UnitedHealthcare",
+        "procedure_code": "",
+        "diagnosis_codes": [],
+        "requesting_provider_npi": "",
+        "clinical_notes": "",
+        "last_request_id": None,
+        "show_review_id": None
+    }
+    for key, val in default_states.items():
+        if key not in st.session_state:
+            st.session_state[key] = val
+
     st.sidebar.title("🩺 Prior Auth Pipeline")
     st.sidebar.markdown("---")
     

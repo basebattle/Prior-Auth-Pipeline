@@ -11,55 +11,59 @@ def show():
         st.info("No PA request selected for review.")
         return
 
-    # Visual Score Indicators
-    package = st.session_state.get("current_package")
-    score = package.get("confidence_score", 0.87) if package else 0.87
-    risk_level = package.get("risk_level", "LOW") if package else "LOW"
+    # Load dynamic data from service
+    full_data = pa_service.get_full_request_and_package(request_id)
+    if not full_data:
+        st.error("PA Request data not found.")
+        return
+
+    # Extract metadata and package
+    patient_name = full_data.get("patient_name", "Unknown")
+    patient_dob = full_data.get("patient_dob", "Unknown")
+    payer_name = full_data.get("payer_name", "Unknown")
+    procedure_code = full_data.get("procedure_code", "Unknown")
+    
+    # Check if package exists in the DB result
+    # The PAStore saves the package in the 'result_package' column
+    package = full_data.get("result_package", {})
+    if isinstance(package, str):
+        try:
+            package = json.loads(package)
+        except:
+            package = {}
+
+    score = package.get("confidence_score", 0.0)
+    risk_level = package.get("risk_level", "Unknown")
+    recommendation = package.get("recommendation", "human_review")
     
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("Confidence Score")
-        st.metric("Score", f"{score:.2f}", "High (Recommend: AUTO-APPROVE)" if score > 0.8 else "Moderate")
+        st.metric("Score", f"{score:.2f}", f"Recommend: {recommendation.upper()}")
         st.progress(score)
 
     with col2:
         st.subheader("Denial Risk")
-        st.info(f"🟢 {risk_level.upper()} (Based on historical factors)")
+        status_color = "🟢" if risk_level == "low" else "🟡" if risk_level == "medium" else "🔴"
+        st.info(f"{status_color} {risk_level.upper()} (Based on historical factors)")
 
     st.markdown("---")
 
     # Final Package View
     st.subheader("PA SUBMISSION PACKAGE")
     with st.expander("COVER SHEET", expanded=True):
-        st.markdown("""
-        **Patient:** John Smith (DOB: 1965-03-15)
-        **Payer:** UnitedHealthcare | Choice Plus PPO
-        **Procedure:** 27447 - Total Knee Replacement, Right
-        **Dx:** M17.11 - Primary OA, Right Knee
-        **Provider:** Dr. Sarah Williams, MD (NPI: 1234567890)
-        **Urgency:** Standard
-        """)
+        st.markdown(package.get("cover_sheet", f"**Patient:** {patient_name}\n**Payer:** {payer_name}\n**Procedure:** {procedure_code}"))
 
     with st.expander("MEDICAL NECESSITY ARGUMENT", expanded=True):
-        st.markdown("""
-        This patient meets medical necessity criteria for TKR based on the following:
-        
-        1. **Diagnosis:** Kellgren-Lawrence Grade IV OA confirmed on imaging.
-        2. **Conservative Treatment Failure:** Patient completed 12 sessions of physical therapy, trial of NSAIDs (naproxen 500mg BID x 3 months), and 3 corticosteroid injections over 6 months without relief.
-        3. **Functional Limitation:** Unable to ambulate >100m without significant pain (VAS 8/10).
-        4. **Surgical Candidacy:** BMI 28.2. No contraindications.
-        
-        **Supporting Guidelines:**
-        - AAOS Clinical Practice Guideline
-        - CMS NCD 150.6: Total Knee Replacement
-        """)
+        st.markdown(package.get("medical_necessity_argument", "No argument generated."))
 
     with st.expander("DOCUMENTATION CHECKLIST"):
-        st.checkbox("Clinical notes with conservative history", value=True, disabled=True)
-        st.checkbox("Imaging report (X-ray/MRI)", value=True, disabled=True)
-        st.checkbox("PT records", value=True, disabled=True)
-        st.checkbox("Medication trial history", value=True, disabled=True)
-        st.checkbox("Surgical consent obtained", value=False)
+        checklist = package.get("documentation_checklist", [])
+        if checklist:
+            for item in checklist:
+                st.checkbox(item.get("item", "Evidence"), value=(item.get("status") == "present"), disabled=True)
+        else:
+            st.write("No checklist items generated.")
 
     # Decisions
     st.markdown("---")
