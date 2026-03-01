@@ -3,12 +3,12 @@ QUALITY_CHECK_SYSTEM_PROMPT = """You are a Prior Authorization Quality Auditor. 
 If there are issues, clearly state what they are and provide improvement instructions for the relevant agent.
 
 Respond with EXACTLY this JSON structure:
-{
+{{
   "passed": true/false (true if ready for synthesis),
   "issues": [ "Identify any specific issues" ],
   "improvement_instructions": "Specify which agent needs to improve and what exactly to fix/add",
   "overall_assessment": "1-2 sentence assessment of current state"
-}"""
+}}"""
 
 QUALITY_CHECK_USER_TEMPLATE = """Review the current state for {{patient_name}}."""
     
