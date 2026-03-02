@@ -58,23 +58,23 @@ class PAService:
         if not self.store.get_request(request_id):
             self.store.create_request(request_id, request.dict())
         
-        return PARequestState(
-            request_id=request_id,
-            patient_id=request.patient_id,
-            patient_name=request.patient_name,
-            patient_dob=request.patient_dob,
-            payer_name=request.payer_name,
-            procedure_code=request.procedure_code,
-            diagnosis_codes=request.diagnosis_codes,
-            requesting_provider_npi=request.requesting_provider_npi,
-            clinical_notes=request.clinical_notes,
-            urgency=request.urgency,
-            current_agent="triage",
-            iteration_count=0,
-            pipeline_status="in_progress",
-            processing_start_time=time.time(),
-            agent_timings={}
-        )
+        return {
+            "request_id": request_id,
+            "patient_id": request.patient_id,
+            "patient_name": request.patient_name,
+            "patient_dob": request.patient_dob,
+            "payer_name": request.payer_name,
+            "procedure_code": request.procedure_code,
+            "diagnosis_codes": request.diagnosis_codes,
+            "requesting_provider_npi": request.requesting_provider_npi,
+            "clinical_notes": request.clinical_notes,
+            "urgency": request.urgency,
+            "current_agent": "triage",
+            "iteration_count": 0,
+            "pipeline_status": "in_progress",
+            "processing_start_time": time.time(),
+            "agent_timings": {}
+        }
 
     def _handle_final_state(self, request_id: str, final_state: Dict[str, Any]) -> str:
         pa_package = final_state.get("pa_package")

@@ -5,7 +5,7 @@ import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     PieChart, Pie, Cell, LineChart, Line, AreaChart, Area
 } from "recharts";
-import { Activity, CheckCircle, XCircle, Clock, Zap, Target, TrendingUp } from "lucide-react";
+import { Activity, CheckCircle, XCircle, Clock, Zap, Target, TrendingUp, TrendingDown } from "lucide-react";
 
 const APPROVAL_DATA = [
     { name: "Mon", approvals: 45, denials: 12 },

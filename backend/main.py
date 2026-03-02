@@ -38,17 +38,24 @@ def get_random_scenarios(count: int = 1):
 async def submit_pa_request(request: PARequestInput, background_tasks: BackgroundTasks):
     """Submit a PA request to the multi-agent pipeline."""
     try:
+        print(f"Received PA submission for patient: {request.patient_name}")
         # Create request in DB first and get ID
-        # We need a method to just prepare state and save initial record
         request_id = str(uuid.uuid4())
+        print(f"Generated UUID: {request_id}")
+        
         pa_service.store.create_request(request_id, request.dict())
+        print(f"Request {request_id} created in DB")
         
         # Run pipeline in background
         background_tasks.add_task(pa_service.run_pipeline_background, request_id, request)
+        print(f"Background task added for {request_id}")
         
         return {"request_id": request_id, "status": "processing"}
     except Exception as e:
-        print(f"Submission error: {e}")
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"CRITICAL Submission error: {e}")
+        print(error_trace)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/requests")
