@@ -18,8 +18,8 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p data/reference data/guidelines exports
 
-# Expose Streamlit port
-EXPOSE 8501
+# Expose FastAPI port
+EXPOSE 8000
 
-# Command to run Streamlit
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Command to run FastAPI
+CMD ["python", "main.py"]
