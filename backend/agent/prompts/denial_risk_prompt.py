@@ -3,7 +3,7 @@ DENIAL_RISK_SYSTEM_PROMPT = """You are a Healthcare Denial Risk Prediction Agent
 Analyze the coverage determination, NPI status, and medical necessity strength.
 
 Respond with EXACTLY this JSON structure:
-{
+{{
   "risk_score": 0.0 - 1.0 (Higher means higher probability of denial),
   "risk_level": "low" or "medium" or "high",
   "risk_factors": [
@@ -15,7 +15,7 @@ Respond with EXACTLY this JSON structure:
     "Actionable step to reduce risk 2"
   ],
   "reasoning": "2-3 sentence explanation of the risk assessment"
-}"""
+}}"""
 
 DENIAL_RISK_USER_TEMPLATE = """Evaluate the denial risk for this PA request:
 

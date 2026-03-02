@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-    PieChart, Pie, Cell, LineChart, Line, AreaChart, Area
+    PieChart, Pie, Cell, AreaChart, Area
 } from "recharts";
-import { Activity, CheckCircle, XCircle, Clock, Zap, Target, TrendingUp, TrendingDown } from "lucide-react";
+import { Activity, CheckCircle, Clock, Zap, Target, TrendingUp, TrendingDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const APPROVAL_DATA = [
     { name: "Mon", approvals: 45, denials: 12 },
@@ -209,8 +210,4 @@ function StatCard({ label, value, trend, icon: Icon, color }: any) {
             </div>
         </div>
     );
-}
-
-function cn(...inputs: any[]) {
-    return inputs.filter(Boolean).join(" ");
 }

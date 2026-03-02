@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import sys
 import uuid
+import traceback
 from pathlib import Path
 
 # Add backend to path so we can import services
@@ -38,25 +39,25 @@ def get_random_scenarios(count: int = 1):
 async def submit_pa_request(request: PARequestInput, background_tasks: BackgroundTasks):
     """Submit a PA request to the multi-agent pipeline."""
     try:
-        print(f"Received PA submission for patient: {request.patient_name}")
-        # Create request in DB first and get ID
+        print(f"DEBUG: Received submission for {request.patient_name}")
         request_id = str(uuid.uuid4())
-        print(f"Generated UUID: {request_id}")
         
-        pa_service.store.create_request(request_id, request.dict())
-        print(f"Request {request_id} created in DB")
+        # Log exactly what we're sending to the store
+        req_dict = request.model_dump() if hasattr(request, 'model_dump') else request.dict()
+        print(f"DEBUG: Creating request {request_id} in DB")
+        pa_service.store.create_request(request_id, req_dict)
         
         # Run pipeline in background
+        print(f"DEBUG: Queuing background task for {request_id}")
         background_tasks.add_task(pa_service.run_pipeline_background, request_id, request)
-        print(f"Background task added for {request_id}")
         
         return {"request_id": request_id, "status": "processing"}
     except Exception as e:
-        import traceback
         error_trace = traceback.format_exc()
-        print(f"CRITICAL Submission error: {e}")
+        print(f"CRITICAL ERROR in /api/submit: {e}")
         print(error_trace)
-        raise HTTPException(status_code=500, detail=str(e))
+        # Use a very safe way to return detail to avoided further errors
+        return HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/requests")
 def list_history(limit: int = 50):
@@ -74,7 +75,6 @@ def get_request_details(request_id: str):
 @app.post("/api/review/{request_id}")
 def update_review_status(request_id: str, action: Dict[str, str]):
     """Update decision after human review."""
-    # Logic to update DB status (Approved/Rejected)
     status = action.get("status")
     if status not in ["approved", "rejected"]:
         raise HTTPException(status_code=400, detail="Invalid status")

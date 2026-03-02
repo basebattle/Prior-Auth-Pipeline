@@ -27,4 +27,4 @@ Respond with EXACTLY this JSON structure:
   "recommendation": "auto_approve" or "human_review" or "likely_deny" or "insufficient_info"
 }}"""
 
-SYNTHESIS_USER_TEMPLATE = """Synthesize the final PA package for {{patient_name}}."""
+SYNTHESIS_USER_TEMPLATE = """Synthesize the final PA package for {patient_name}."""

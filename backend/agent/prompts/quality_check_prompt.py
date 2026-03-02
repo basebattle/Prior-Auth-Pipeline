@@ -10,6 +10,4 @@ Respond with EXACTLY this JSON structure:
   "overall_assessment": "1-2 sentence assessment of current state"
 }}"""
 
-QUALITY_CHECK_USER_TEMPLATE = """Review the current state for {{patient_name}}."""
-    
-# Iteration limit is handled in orchestrator
+QUALITY_CHECK_USER_TEMPLATE = """Review the current state for {patient_name}."""

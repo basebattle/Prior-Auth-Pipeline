@@ -12,12 +12,12 @@ TYPE CLASSIFICATION:
 - BEHAVIORAL_HEALTH: Mental health, substance abuse services (CPT 90000-90899, H-codes)
 
 Respond with EXACTLY this JSON structure:
-{
+{{
   "urgency": "urgent" or "standard",
   "pa_type": "surgical" or "imaging" or "medication" or "dme" or "behavioral_health",
   "routing_path": "Brief description of routing decision",
   "reasoning": "2-3 sentence explanation of classification"
-}"""
+}}"""
 
 TRIAGE_USER_TEMPLATE = """Classify this prior authorization request:
 
