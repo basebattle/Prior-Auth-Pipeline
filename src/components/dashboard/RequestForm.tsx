@@ -39,6 +39,13 @@ export function RequestForm() {
         urgency: "standard"
     });
 
+    const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null>(null);
+
+    const showToast = (text: string, type: 'success' | 'error') => {
+        setMessage({ text, type });
+        setTimeout(() => setMessage(null), 5000);
+    };
+
     const loadRandomData = async () => {
         setRandomizing(true);
         try {
@@ -58,8 +65,10 @@ export function RequestForm() {
                 clinical_notes: scenario.clinical_notes,
                 urgency: "standard"
             });
+            showToast("Successfully loaded randomized case scenario.", "success");
         } catch (err) {
             console.error("Failed to fetch scenario", err);
+            showToast("Failed to connect to backend clinical database.", "error");
         } finally {
             setRandomizing(false);
         }
@@ -90,7 +99,7 @@ export function RequestForm() {
 
             router.push(`/console/visualizer?id=${data.request_id}`);
         } catch (err) {
-            alert("Pipeline Submission Error. Ensure backend is running.");
+            showToast("Pipeline Submission Error. Ensure backend is running.", "error");
         } finally {
             setLoading(false);
         }
@@ -104,6 +113,7 @@ export function RequestForm() {
                     <p className="text-neutral-400 text-sm mt-1">Initiate a multi-agentic medical necessity review</p>
                 </div>
                 <button
+                    type="button"
                     onClick={loadRandomData}
                     disabled={randomizing}
                     className="flex items-center gap-2 px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg text-sm font-semibold transition-all border border-neutral-700 active:scale-95 disabled:opacity-50"
@@ -112,6 +122,16 @@ export function RequestForm() {
                     Load Randomized Case
                 </button>
             </div>
+
+            {message && (
+                <div className={cn(
+                    "flex items-center gap-3 p-4 rounded-xl border animate-in slide-in-from-top-4",
+                    message.type === 'success' ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400" : "bg-red-500/10 border-red-500/20 text-red-400"
+                )}>
+                    {message.type === 'success' ? <CheckCircle2 className="size-5" /> : <AlertCircle className="size-5" />}
+                    <span className="text-sm font-medium">{message.text}</span>
+                </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
@@ -124,10 +144,10 @@ export function RequestForm() {
 
                         <div className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
-                                <InputGroup label="Patient ID" value={formData.patient_id} onChange={(v: string) => setFormData({ ...formData, patient_id: v })} placeholder="e.g. P1001" />
-                                <InputGroup label="DOB" value={formData.patient_dob} onChange={(v: string) => setFormData({ ...formData, patient_dob: v })} placeholder="YYYY-MM-DD" />
+                                <InputGroup label="Patient ID" required value={formData.patient_id} onChange={(v: string) => setFormData({ ...formData, patient_id: v })} placeholder="e.g. P1001" />
+                                <InputGroup label="DOB" required type="date" value={formData.patient_dob} onChange={(v: string) => setFormData({ ...formData, patient_dob: v })} placeholder="YYYY-MM-DD" />
                             </div>
-                            <InputGroup label="Full Name" value={formData.patient_name} onChange={(v: string) => setFormData({ ...formData, patient_name: v })} placeholder="e.g. John Doe" />
+                            <InputGroup label="Full Name" required value={formData.patient_name} onChange={(v: string) => setFormData({ ...formData, patient_name: v })} placeholder="e.g. John Doe" />
                         </div>
                     </div>
 
@@ -140,10 +160,10 @@ export function RequestForm() {
 
                         <div className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
-                                <InputGroup label="Procedure Code" value={formData.procedure_code} onChange={(v: string) => setFormData({ ...formData, procedure_code: v })} placeholder="CPT/HCPCS" />
-                                <InputGroup label="Provider NPI" value={formData.requesting_provider_npi} onChange={(v: string) => setFormData({ ...formData, requesting_provider_npi: v })} placeholder="10 Digits" />
+                                <InputGroup label="Procedure Code" required value={formData.procedure_code} onChange={(v: string) => setFormData({ ...formData, procedure_code: v })} placeholder="CPT/HCPCS" />
+                                <InputGroup label="Provider NPI" required pattern="[0-9]{10}" value={formData.requesting_provider_npi} onChange={(v: string) => setFormData({ ...formData, requesting_provider_npi: v })} placeholder="10 Digits" />
                             </div>
-                            <InputGroup label="Diagnosis Codes" value={formData.diagnosis_codes} onChange={(v: string) => setFormData({ ...formData, diagnosis_codes: v })} placeholder="ICD-10 (comma separated)" />
+                            <InputGroup label="Diagnosis Codes" required value={formData.diagnosis_codes} onChange={(v: string) => setFormData({ ...formData, diagnosis_codes: v })} placeholder="ICD-10 (comma separated)" />
 
                             <div>
                                 <label className="block text-[10px] uppercase font-bold text-neutral-500 mb-1 ml-1">Payer</label>
@@ -189,6 +209,7 @@ export function RequestForm() {
                                 className="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-neutral-300 h-48 focus:border-blue-500 outline-none transition-colors overflow-y-auto"
                                 placeholder="Enter clinical justification, exam findings, or therapy history..."
                                 value={formData.clinical_notes}
+                                required
                                 onChange={(e) => setFormData({ ...formData, clinical_notes: e.target.value })}
                             />
                         </div>
@@ -208,16 +229,18 @@ export function RequestForm() {
     );
 }
 
-function InputGroup({ label, value, onChange, placeholder }: any) {
+function InputGroup({ label, value, onChange, placeholder, required, type = "text", pattern }: any) {
     return (
         <div>
             <label className="block text-[10px] uppercase font-bold text-neutral-500 mb-1 ml-1">{label}</label>
             <input
-                type="text"
-                className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-colors"
+                type={type}
+                className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-colors invalid:border-red-500/50"
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
+                required={required}
+                pattern={pattern}
             />
         </div>
     );

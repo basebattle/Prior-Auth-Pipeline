@@ -21,9 +21,9 @@ export default function LandingPage() {
                         <span className="font-bold tracking-tight text-lg">Priora<span className="text-blue-500 text-xl italic ml-1">Pipeline</span></span>
                     </div>
                     <div className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-400">
-                        <a href="#" className="hover:text-blue-400 transition-colors">Pipeline Visualizer</a>
-                        <a href="#" className="hover:text-blue-400 transition-colors">Analytics</a>
-                        <a href="#" className="hover:text-blue-400 transition-colors">Human Review</a>
+                        <Link href="/console/visualizer" className="hover:text-blue-400 transition-colors">Pipeline Visualizer</Link>
+                        <Link href="/console/analytics" className="hover:text-blue-400 transition-colors">Analytics</Link>
+                        <Link href="/console/review" className="hover:text-blue-400 transition-colors">Human Review</Link>
                     </div>
                     <Link href="/console" className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full text-sm font-semibold transition-all shadow-lg shadow-blue-900/40 hover:scale-105 active:scale-95">
                         Launch Console
@@ -59,9 +59,9 @@ export default function LandingPage() {
                             <Link href="/console/new-request" className="px-8 py-4 bg-white text-black hover:bg-neutral-200 font-bold rounded-xl transition-all flex items-center gap-2 group">
                                 New PA Request <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
-                            <button className="px-8 py-4 bg-neutral-900 border border-neutral-800 hover:bg-neutral-800 text-white font-bold rounded-xl transition-all">
+                            <Link href="/console/manual" className="px-8 py-4 bg-neutral-900 border border-neutral-800 hover:bg-neutral-800 text-white font-bold rounded-xl transition-all">
                                 View Documentation
-                            </button>
+                            </Link>
                         </div>
 
                         <div className="grid grid-cols-3 gap-8 py-8 border-t border-neutral-800/50">

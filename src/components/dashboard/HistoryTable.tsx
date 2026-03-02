@@ -46,12 +46,19 @@ export function HistoryTable() {
                             type="text"
                             placeholder="Filter records..."
                             className="bg-neutral-900 border border-neutral-800 rounded-lg py-2 pl-10 pr-4 text-sm text-neutral-300 focus:outline-none focus:border-blue-400 transition-all w-full md:w-64"
+                            aria-label="Filter records"
                         />
                     </div>
-                    <button className="p-2 bg-neutral-900 border border-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors">
+                    <button
+                        className="p-2 bg-neutral-900 border border-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+                        aria-label="Filter results"
+                    >
                         <Filter className="size-5" />
                     </button>
-                    <button className="p-2 bg-neutral-900 border border-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors">
+                    <button
+                        className="p-2 bg-neutral-900 border border-neutral-800 rounded-lg text-neutral-400 hover:text-white transition-colors"
+                        aria-label="Download records"
+                    >
                         <Download className="size-5" />
                     </button>
                 </div>
