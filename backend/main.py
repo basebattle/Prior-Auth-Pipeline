@@ -57,7 +57,7 @@ async def submit_pa_request(request: PARequestInput, background_tasks: Backgroun
         print(f"CRITICAL ERROR in /api/submit: {e}")
         print(error_trace)
         # Use a very safe way to return detail to avoided further errors
-        return HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/requests")
 def list_history(limit: int = 50):
