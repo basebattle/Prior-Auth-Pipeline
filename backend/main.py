@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import sys
+import uuid
 from pathlib import Path
 
 # Add backend to path so we can import services
@@ -34,14 +35,20 @@ def get_random_scenarios(count: int = 1):
     return generate_scenarios(count)
 
 @app.post("/api/submit")
-async def submit_pa_request(request: PARequestInput):
+async def submit_pa_request(request: PARequestInput, background_tasks: BackgroundTasks):
     """Submit a PA request to the multi-agent pipeline."""
     try:
-        # We'll use the sync version for demo simplicity or wrap in background task
-        # For end-to-end demo, return ID immediately
-        request_id = pa_service.submit_request_sync(request)
+        # Create request in DB first and get ID
+        # We need a method to just prepare state and save initial record
+        request_id = str(uuid.uuid4())
+        pa_service.store.create_request(request_id, request.dict())
+        
+        # Run pipeline in background
+        background_tasks.add_task(pa_service.run_pipeline_background, request_id, request)
+        
         return {"request_id": request_id, "status": "processing"}
     except Exception as e:
+        print(f"Submission error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/requests")

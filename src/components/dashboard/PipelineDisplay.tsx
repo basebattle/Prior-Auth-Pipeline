@@ -39,11 +39,19 @@ export function PipelineDisplay() {
         const rid = idFromUrl || sessionStorage.getItem("last_request_id");
         setRequestId(rid);
 
-        if (rid) {
-            pollData(rid);
-        } else {
+        if (!rid) {
             setLoading(false);
+            return;
         }
+
+        // Start polling
+        pollData(rid);
+
+        const interval = setInterval(() => {
+            pollData(rid);
+        }, 3000);
+
+        return () => clearInterval(interval);
     }, [idFromUrl]);
 
     const pollData = async (rid: string) => {
@@ -53,19 +61,22 @@ export function PipelineDisplay() {
             if (resp.ok) {
                 const result = await resp.json();
                 setData(result);
+
                 if (result.status === 'complete' || result.result_package) {
                     setProgress(100);
+                } else if (result.status === 'error') {
+                    setProgress(0);
                 } else {
-                    // Mock progress for demo if still processing
-                    const p = setInterval(() => {
-                        setProgress(prev => {
-                            if (prev >= 90) {
-                                clearInterval(p);
-                                return 90;
-                            }
-                            return prev + 5;
-                        });
-                    }, 2000);
+                    // Calculate pseudo-progress based on agent results present
+                    let activeStep = 0;
+                    if (result.triage_result) activeStep = 1;
+                    if (result.coverage_result) activeStep = 2;
+                    if (result.npi_result) activeStep = 3;
+                    if (result.medical_necessity_result) activeStep = 4;
+                    if (result.denial_risk_result) activeStep = 5;
+
+                    const baseProgress = activeStep * 15;
+                    setProgress(prev => Math.max(prev, baseProgress + 5));
                 }
             }
         } catch (err) {

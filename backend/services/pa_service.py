@@ -18,28 +18,46 @@ class PAService:
 
     async def submit_request(self, request: PARequestInput) -> str:
         """Submit a single PA request for processing (async)."""
-        state = self._prepare_initial_state(request)
+        request_id = str(uuid.uuid4())
+        state = self._prepare_initial_state(request_id, request)
         try:
             final_state = await self.pipeline.ainvoke(state)
-            return self._handle_final_state(state["request_id"], final_state)
+            return self._handle_final_state(request_id, final_state)
         except Exception as e:
-            self.store.update_request_status(state["request_id"], "error")
+            self.store.update_request_status(request_id, "error")
             raise e
+
+    def run_pipeline_background(self, request_id: str, request: PARequestInput):
+        """Standard background task for FastAPI."""
+        state = self._prepare_initial_state(request_id, request)
+        try:
+            # Update status to processing
+            self.store.update_request_status(request_id, "processing")
+            # Run graph
+            final_state = self.pipeline.invoke(state)
+            # Handle completion
+            self._handle_final_state(request_id, final_state)
+        except Exception as e:
+            print(f"Background Pipeline Error [{request_id}]: {e}")
+            self.store.update_request_status(request_id, "error")
 
     def submit_request_sync(self, request: PARequestInput) -> str:
         """Submit a single PA request for processing (sync). Better for Streamlit frontend."""
-        state = self._prepare_initial_state(request)
+        request_id = str(uuid.uuid4())
+        state = self._prepare_initial_state(request_id, request)
         try:
             # LangGraph supports synchronous .invoke()
             final_state = self.pipeline.invoke(state)
-            return self._handle_final_state(state["request_id"], final_state)
+            return self._handle_final_state(request_id, final_state)
         except Exception as e:
-            self.store.update_request_status(state["request_id"], "error")
+            self.store.update_request_status(request_id, "error")
             raise e
 
-    def _prepare_initial_state(self, request: PARequestInput) -> PARequestState:
-        request_id = str(uuid.uuid4())
-        self.store.create_request(request_id, request.dict())
+    def _prepare_initial_state(self, request_id: str, request: PARequestInput) -> PARequestState:
+        # Check if already in store, if not create
+        if not self.store.get_request(request_id):
+            self.store.create_request(request_id, request.dict())
+        
         return PARequestState(
             request_id=request_id,
             patient_id=request.patient_id,

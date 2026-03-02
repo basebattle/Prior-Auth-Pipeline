@@ -1,23 +1,28 @@
 import os
 import json
-import anthropic
+from openai import OpenAI
 from typing import Dict, Any, Optional
-from config.settings import ANTHROPIC_API_KEY, HAIKU_MODEL, SONNET_MODEL
+from config.settings import OPENROUTER_API_KEY, HAIKU_MODEL, SONNET_MODEL
 
-client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=OPENROUTER_API_KEY,
+)
 
 def call_claude(prompt: str, system_prompt: str = "", model: str = HAIKU_MODEL, max_tokens: int = 4096) -> str:
-    """Wrapper for Anthropic API calls."""
+    """Wrapper for OpenRouter/OpenAI API calls."""
     try:
-        response = client.messages.create(
+        response = client.chat.completions.create(
             model=model,
             max_tokens=max_tokens,
-            system=system_prompt,
-            messages=[{"role": "user", "content": prompt}]
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt}
+            ]
         )
-        return response.content[0].text
+        return response.choices[0].message.content
     except Exception as e:
-        print(f"Error calling Claude: {e}")
+        print(f"Error calling LLM (OpenRouter): {e}")
         return ""
 
 def parse_json_response(response: str) -> Dict[str, Any]:
