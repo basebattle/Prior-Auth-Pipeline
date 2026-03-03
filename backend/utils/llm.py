@@ -3,20 +3,20 @@ import json
 import traceback
 from openai import OpenAI
 from typing import Dict, Any, Optional
-from config.settings import OPENROUTER_API_KEY, HAIKU_MODEL, SONNET_MODEL
+from config.settings import GEMINI_API_KEY, HAIKU_MODEL, SONNET_MODEL
 
-# Initialize OpenAI client with OpenRouter base URL
+# Initialize OpenAI client with Gemini base URL
 try:
     client = OpenAI(
-        base_url="https://openrouter.ai/api/v1",
-        api_key=OPENROUTER_API_KEY,
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        api_key=GEMINI_API_KEY,
     )
 except Exception as e:
-    print(f"CRITICAL: Failed to initialize OpenAI client for OpenRouter: {e}")
+    print(f"CRITICAL: Failed to initialize OpenAI client for Gemini: {e}")
     client = None
 
 def call_claude(prompt: str, system_prompt: str = "", model: str = HAIKU_MODEL, max_tokens: int = 4096) -> str:
-    """Wrapper for OpenRouter/OpenAI API calls."""
+    """Wrapper for Gemini API calls via OpenAI compatibility layer."""
     if not client:
         print("ERROR: OpenAI client not initialized.")
         return ""
@@ -32,7 +32,7 @@ def call_claude(prompt: str, system_prompt: str = "", model: str = HAIKU_MODEL, 
         )
         return response.choices[0].message.content
     except Exception as e:
-        print(f"ERROR: LLM call failed (OpenRouter): {e}")
+        print(f"ERROR: LLM call failed (Gemini): {e}")
         # traceback.print_exc()
         return ""
 

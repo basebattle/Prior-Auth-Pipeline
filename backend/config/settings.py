@@ -12,14 +12,14 @@ GUIDELINES_DIR = BASE_DIR / "data" / "guidelines"
 EXPORTS_DIR = BASE_DIR / "exports"
 
 # API Configuration
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "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")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyBkma1v3eRRHg1FQ0f3Lw83cxObmFK0bGo")
 LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
 LANGSMITH_PROJECT = os.getenv("LANGSMITH_PROJECT", "Prior-Auth-Pipeline")
 
 # Model Configuration
-HAIKU_MODEL = "anthropic/claude-3.5-haiku"  # OpenRouter format
-SONNET_MODEL = "anthropic/claude-3.5-sonnet" # OpenRouter format
+HAIKU_MODEL = "gemini-2.5-flash"  # Gemini format
+SONNET_MODEL = "gemini-2.5-flash" # Gemini format
+
 
 # RAG Configuration
 CHROMA_PERSIST_DIRECTORY = str(BASE_DIR / "data" / "chroma_db")
