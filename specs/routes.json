@@ -1,0 +1,7 @@
+{
+  "mappings": [
+    { "node": "ingest_claim", "route": "/api/claims/ingest", "method": "POST" },
+    { "node": "validate_necessity", "route": "/api/claims/validate", "method": "POST" },
+    { "node": "finalize_decision", "route": "/api/claims/decision", "method": "GET" }
+  ]
+}
