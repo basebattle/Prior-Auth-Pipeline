@@ -1,0 +1,58 @@
+# Prior-Auth Pipeline Bugfix Implementation Plan
+
+This plan addresses the 13 bugs identified during the PinchTab audit.
+
+## User Review Required
+
+> [!IMPORTANT]
+> - **Stub Pages**: For now, I will create "Coming Soon" stub pages for Analytics, Batch Processing, and Settings to eliminate the 404 errors.
+> - **User Manual**: I plan to extract text from your `backend/USER_MANUAL.md` and render it nicely on the `/console/manual` page.
+> - **Backend URL**: I noticed `RequestForm.tsx` currently defaults to `localhost:8000`. I will ensure it uses `process.env.NEXT_PUBLIC_API_URL` and falls back gracefully or alerts the user if the backend is unreachable.
+
+## Proposed Changes
+
+### Phase 1: Fix Critical 404s
+I will create the missing page files so the sidebar links work immediately.
+
+#### [NEW] [analytics/page.tsx](file:///Users/piyushsharma/Projects/Project%203%20Prior%20Auth%20Pipeline/src/app/console/analytics/page.tsx)
+- Implementation of a basic "Analytics Dashboard (Coming Soon)" view.
+
+#### [NEW] [batch/page.tsx](file:///Users/piyushsharma/Projects/Project%203%20Prior%20Auth%20Pipeline/src/app/console/batch/page.tsx)
+- Implementation of a basic "Batch Processing (Coming Soon)" view.
+
+#### [NEW] [manual/page.tsx](file:///Users/piyushsharma/Projects/Project%203%20Prior%20Auth%20Pipeline/src/app/console/manual/page.tsx)
+- Renders the content of `backend/USER_MANUAL.md`.
+
+#### [NEW] [settings/page.tsx](file:///Users/piyushsharma/Projects/Project%203%20Prior%20Auth%20Pipeline/src/app/console/settings/page.tsx)
+- Implementation of a basic "Settings (Coming Soon)" view.
+
+---
+
+### Phase 2: Landing Page Fixes
+Fixing broken navigation and CTAs on the home page.
+
+#### [MODIFY] [page.tsx](file:///Users/piyushsharma/Projects/Project%203%20Prior%20Auth%20Pipeline/src/app/page.tsx)
+- Replace `<a href="#">` with proper Next.js `<Link>` components pointing to the console routes.
+- Wrap "View Documentation" button in a `<Link>` to the new manual page.
+
+---
+
+### Phase 3: Form Functionality (The Core fix)
+Ensuring users can actually submit requests successfully.
+
+#### [MODIFY] [RequestForm.tsx](file:///Users/piyushsharma/Projects/Project%203%20Prior%20Auth%20Pipeline/src/components/dashboard/RequestForm.tsx)
+- Add `required` to inputs.
+- Change DOB to `type="date"`.
+- Implement basic pattern matching for NPI.
+- Replace `alert()` with a cleaner UI feedback mechanism (simple state-based toast/message).
+
+## Verification Plan
+
+### Automated Tests
+- I will reuse **PinchTab** after each phase to verify that:
+  1. No more 404s exist for the sidebar links.
+  2. The homepage navigation correctly reaches the console pages.
+  3. The form correctly prevents empty submissions.
+
+### Manual Verification
+- I will provide screenshots using `pinchtab screenshot` of the new pages and fixed form states.

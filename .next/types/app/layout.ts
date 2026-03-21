@@ -1,4 +1,4 @@
-// File: /Users/piyushsharma/Projects/Project 3 Prior Auth Pipeline/src/app/layout.tsx
+// File: /Users/piyushsharma/Projects/02_Web_Cloud/prior-auth-pipeline/src/app/layout.tsx
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
